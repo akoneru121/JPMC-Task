@@ -1,7 +1,7 @@
 module "example_bucket" {
   source = "./modules/s3"
 
-  bucket_name = "my-example-bucket-name"
+  bucket_name = "test-bucket-name"
   
   # Enable versioning
   enable_versioning = true
