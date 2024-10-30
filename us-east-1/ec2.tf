@@ -7,7 +7,7 @@ resource "aws_instance" "primary_instance" {
   instance_type     = var.instance_type
   security_groups   = [aws_security_group.tomcat_sg.name]
 
-}
+
 
 user_data = <<-EOF
                 #!/bin/bash
