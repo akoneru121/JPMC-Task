@@ -17,6 +17,7 @@ AWS Organizations and SCPs:
 Utilizes AWS Organizations and Service Control Policies (SCPs) to restrict deployments in designated regions.
 Implements best practices by denying access to all AWS regions except specified ones, aligning with organizational security policies.
 Components
+
 1. Multi-Region Failover with Route 53 and ALB
 Primary Region (us-east-1): Hosts the primary ALB and is the default traffic target.
 Secondary Region (us-west-2): Hosts the secondary ALB and serves as a failover in case of primary region failure.
@@ -50,3 +51,27 @@ terraform init
 
 # Apply Terraform configurations
 terraform apply
+
+
++----------------+
+                     |     Route 53   |
+                     +---------+-----+
+                               |
+                 +-------------+-------------+
+                 |                           |
+        +--------+--------+         +--------+--------+
+        |   Primary Region |         |   Failover Region |
+        +--------+--------+         +--------+--------+
+                 |                           |
+        +---------+---------+         +--------+--------+
+        |       ALB         |         |       ALB        |
+        +---------+---------+         +--------+--------+
+                 |                           |
+        +---------+---------+         +--------+--------+
+        |     S3 Bucket     |         |     S3 Bucket    |
+        +---------+---------+         +--------+--------+
+                 |                           |
+        +---------+---------+         +--------+--------+
+        | AWS Organizations |         | AWS Organizations|
+        |       SCPs        |         |       SCPs       |
+        +-----------------+-+         +-----------------+-+
